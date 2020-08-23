@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from covid.domain.model import User, Article, Tag, make_comment, make_tag_association, ModelException
 
@@ -8,7 +8,7 @@ import pytest
 @pytest.fixture()
 def article():
     return Article(
-        date.fromisoformat('2020-03-15'),
+        date(2020, 3, 15),
         'Coronavirus travel restrictions: Self-isolation deadline pushed back to give airlines breathing room',
         'The self-isolation deadline has been pushed back',
         'https://www.nzherald.co.nz/business/news/article.cfm?c_id=3&objectid=12316800',
@@ -38,7 +38,7 @@ def test_user_construction(user):
 
 def test_article_construction(article):
     assert article.id is None
-    assert article.date == date.fromisoformat('2020-03-15')
+    assert article.date == date(2020,3,15)
     assert article.title == 'Coronavirus travel restrictions: Self-isolation deadline pushed back to give airlines breathing room'
     assert article.first_para == 'The self-isolation deadline has been pushed back'
     assert article.hyperlink == 'https://www.nzherald.co.nz/business/news/article.cfm?c_id=3&objectid=12316800'
@@ -53,11 +53,11 @@ def test_article_construction(article):
 
 def test_article_less_than_operator():
     article_1 = Article(
-        date.fromisoformat('2020-03-15'), None, None, None, None
+        date(2020, 3, 15), None, None, None, None
     )
 
     article_2 = Article(
-        date.fromisoformat('2020-04-20'), None, None, None, None
+        date(2020,4,20), None, None, None, None
     )
 
     assert article_1 < article_2
